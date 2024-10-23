@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import './utils/custom_text_field.dart'; // Import the custom text field
+import 'package:flutter_svg/flutter_svg.dart';
+import './utils/custom_text_field.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -21,8 +22,24 @@ class LoginScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Container(
+                width: 120,
+                height: 120,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
               const SizedBox(height: 40),
               const Text(
                 'E-MAIL',

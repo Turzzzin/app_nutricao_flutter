@@ -1,0 +1,34 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main circle background -->
+  <circle cx="100" cy="100" r="90" fill="#4CAF50"/>
+  
+  <!-- Inner white circle -->
+  <circle cx="100" cy="100" r="80" fill="white"/>
+  
+  <!-- Plate base circle -->
+  <circle cx="100" cy="100" r="70" fill="#4CAF50" opacity="0.1"/>
+  
+  <!-- Fork design -->
+  <path d="M70 60 L70 120 M60 60 L60 90 M80 60 L80 90 M70 90 C60 90 80 90 70 120" 
+        stroke="#333333" 
+        stroke-width="4" 
+        fill="none"
+        stroke-linecap="round"/>
+  
+  <!-- Knife design -->
+  <path d="M120 60 C140 70 140 110 120 120" 
+        stroke="#333333" 
+        stroke-width="4" 
+        fill="none"
+        stroke-linecap="round"/>
+  
+  <!-- Message bubble suggesting WhatsApp -->
+  <path d="M160 100 A30 30 0 0 1 130 130 L130 140 L120 130 A30 30 0 0 1 130 70 A30 30 0 0 1 160 100" 
+        fill="#4CAF50" 
+        opacity="0.8"/>
+  
+  <!-- Decorative leaves suggesting healthy food -->
+  <path d="M90 140 C100 130 110 140 100 150 C90 140 100 130 110 140" 
+        fill="#4CAF50" 
+        opacity="0.8"/>
+</svg>

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import './utils/custom_text_field.dart';
+import './utils/custom_button.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -70,25 +71,11 @@ class LoginScreen extends StatelessWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
+              CustomButton(
                 onPressed: () {
-                  // Add login logic here
+                  // Add my logic here
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[800],
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  'LOGIN',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                text: 'LOGIN',
               ),
               const SizedBox(height: 16),
               Row(

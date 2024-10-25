@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/custom_text_field.dart';
 import '../utils/custom_button.dart';
 import '../utils/custom_appbar.dart';
+import '../utils/database_service.dart'; 
 
 class SignupScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -11,6 +12,20 @@ class SignupScreen extends StatelessWidget {
   final TextEditingController confirmPasswordController = TextEditingController();
 
   SignupScreen({Key? key}) : super(key: key);
+
+
+  Future <bool> _criarUsuario() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+    
+    final usuario = await DatabaseService.getUsuario(email);
+    print(usuario);
+    if (usuario.isEmpty) {
+      return false;
+    }
+    await DatabaseService.cadastrarUsuario(email, password);
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +103,56 @@ class SignupScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               CustomButton(
-                onPressed: () {
+                onPressed: () async {
                   // Adicione a lógica para registrar o usuário aqui
                   // Por exemplo, verificar se as senhas correspondem e chamar a API de registro
-                  Navigator.pushNamed(context, '/home');
+                  bool _criado = false;
+                  bool _senhaIgual = false;
+                  if (passwordController.text == confirmPasswordController.text) {
+                    _criado = await _criarUsuario();
+                    _senhaIgual = true;
+                  }
+                  else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Erro'),
+                          content: const Text('As senhas informadas não correspondem.'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  if (_criado) {
+                    Navigator.pushNamed(context, '/login');
+                  }
+                  else if (!_senhaIgual) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Erro'),
+                          content: const Text('Usuário já existe.'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
                 text: 'CADASTRAR',
               ),

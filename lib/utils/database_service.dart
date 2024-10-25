@@ -32,7 +32,7 @@ class DatabaseService {
     id INTEGER PRIMART KEY AUTOINCREMENT NOT NULL,
     nome TEXT,
     FOREIGN KEY (usuario_id) REFERENCES alimento (id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente (id),""")
+    FOREIGN KEY (paciente_id) REFERENCES paciente (id),""");
 
   await database.execute("""CREATE TABLE IF NOT EXISTS cardapio_alimento (
     id INTEGER PRIMART KEY AUTOINCREMENT NOT NULL,

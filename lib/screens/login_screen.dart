@@ -2,12 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/custom_text_field.dart';
 import '../utils/custom_button.dart';
+import '../utils/database_service.dart'; 
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   LoginScreen({Key? key}) : super(key: key);
+
+
+  Future <bool> _login() async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    final usuario = await DatabaseService.getUsuario(email);
+    if (usuario.isNotEmpty) {
+      if (usuario[0]['senha'] == password) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +84,31 @@ class LoginScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 CustomButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                  onPressed: () async {
+                    final loginExiste = await _login();
+                    print(loginExiste);
+                    if (loginExiste == true) {
+                      Navigator.pushNamed(context, '/home');
+                    }
+                    else {
+                      showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Erro'),
+                          content: const Text('Usuário ou senha incorretos!'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('OK'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    }
                   },
                   text: 'LOGIN',
                 ),

@@ -11,35 +11,45 @@ class DatabaseService {
       """);
 
     await database.execute("""CREATE TABLE IF NOT EXISTS paciente (
-      id INTEGER PRIMART KEY AUTOINCREMENT NOT NULL,
+      id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
       nome TEXT,
       sobrenome TEXT,
       fotoPath TEXT,
-      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""");
 
-    await database.execute("""CREATE TABLE IF NOT EXISTS alimento
-    id INTEGER PRIMART KEY AUTOINCREMENT NOT NULL,
+  await database.execute("""CREATE TABLE IF NOT EXISTS alimento (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     nome TEXT,
     fotoPath TEXT,
     categoria TEXT,
     tipo TEXT,
-    FOREIGN KEY (usuario_id) REFERENCES users (id),
+    usuario_id INTEGER,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    """);
+    FOREIGN KEY (usuario_id) REFERENCES usuario (id)
+  );
+""");
 
-    await database.execute("""CREATE TABLE IF NOT EXISTS cardapio
-    id INTEGER PRIMART KEY AUTOINCREMENT NOT NULL,
+    await database.execute("""CREATE TABLE IF NOT EXISTS cardapio (
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     nome TEXT,
-    FOREIGN KEY (usuario_id) REFERENCES alimento (id),
-    FOREIGN KEY (paciente_id) REFERENCES paciente (id),""");
+    alimento_id INTEGER,
+    paciente_id INTEGER,
+    FOREIGN KEY (alimento_id) REFERENCES alimento (id),
+    FOREIGN KEY (paciente_id) REFERENCES paciente (id)
+  );
+""");
+
 
   await database.execute("""CREATE TABLE IF NOT EXISTS cardapio_alimento (
-    id INTEGER PRIMART KEY AUTOINCREMENT NOT NULL,
+    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     opcao TEXT,
-    FOREIGN KEY (cardapio_id) REFERENCES cardapio (id),
-    FOREIGN KEY (alimento_id) REFERENCES alimento (id),
+    cardapio_id INTEGER,
+    alimento_id INTEGER,
     createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cardapio_id) REFERENCES cardapio (id),
+    FOREIGN KEY (alimento_id) REFERENCES alimento (id)
+    );
     """);
   }
 

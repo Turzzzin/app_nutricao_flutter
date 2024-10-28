@@ -19,8 +19,7 @@ class SignupScreen extends StatelessWidget {
     String password = passwordController.text;
     
     final usuario = await DatabaseService.getUsuario(email);
-    print(usuario);
-    if (usuario.isEmpty) {
+    if (usuario.isNotEmpty) {
       return false;
     }
     await DatabaseService.cadastrarUsuario(email, password);
@@ -134,7 +133,7 @@ class SignupScreen extends StatelessWidget {
                   if (_criado) {
                     Navigator.pushNamed(context, '/login');
                   }
-                  else if (!_senhaIgual) {
+                  else if (!_criado && _senhaIgual) {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {

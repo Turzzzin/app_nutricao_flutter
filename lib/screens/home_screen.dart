@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import '../utils/custom_appbar.dart'; // Adjust the path if necessary
+import '../utils/database_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> usuario = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       backgroundColor: Colors.white, // Light green background color
       appBar: CustomAppBar(
@@ -31,9 +33,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 _buildMenuButton(
                   icon: Icons.add_circle_outline,
-                  label: 'CADASTRAR\nAUMENTO',
+                  label: 'CADASTRAR\nALIMENTO',
                   onPressed: () {
-                    // Add cadastrar aumento functionality
+                    Navigator.pushNamed(context, '/alimento/novo', arguments: usuario);
                   },
                 ),
                 _buildMenuButton(

@@ -7,6 +7,7 @@ import '../utils/database_service.dart';
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  Map<String, dynamic> usuarioL = {};
 
   LoginScreen({Key? key}) : super(key: key);
 
@@ -18,6 +19,7 @@ class LoginScreen extends StatelessWidget {
     final usuario = await DatabaseService.getUsuario(email);
     if (usuario.isNotEmpty) {
       if (usuario[0]['senha'] == password) {
+        usuarioL = usuario[0];
         return true;
       }
     }
@@ -88,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                     final loginExiste = await _login();
                     print(loginExiste);
                     if (loginExiste == true) {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushNamed(context, '/home', arguments: usuarioL);
                     }
                     else {
                       showDialog(

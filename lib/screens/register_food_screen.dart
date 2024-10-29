@@ -32,38 +32,32 @@ class RegisterFoodScreen extends StatelessWidget {
         title: Text("Cadastrar Alimento"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
+            CustomTextField(
               controller: nomeController,
-              decoration: InputDecoration(
-                labelText: "Nome",
-                border: OutlineInputBorder(),
-              ),
+              hintText: 'Nome',
+              obscureText: true,
             ),
             SizedBox(height: 16),
-            TextField(
+            CustomTextField(
               controller: fotoPathController,
-              decoration: InputDecoration(
-                labelText: "Foto Path",
-                border: OutlineInputBorder(),
-              ),
+              hintText: 'Foto',
+              obscureText: true,
             ),
             SizedBox(height: 16),
             CustomTextField(
               controller: categoriaController,
-              hintText: 'senha',
+              hintText: 'Categoria',
               obscureText: true,
             ),
             SizedBox(height: 16),
-            TextField(
+            CustomTextField(
               controller: tipoController,
-              decoration: InputDecoration(
-                labelText: "Tipo",
-                border: OutlineInputBorder(),
-              ),
+              hintText: "Tipo",
+              obscureText: true,
             ),
             SizedBox(height: 32),
             CustomButton(
@@ -89,8 +83,6 @@ class RegisterFoodScreen extends StatelessWidget {
                 text: "Cadastrar",
             ),
             const SizedBox(height: 16),
-            const Divider(color: Colors.black),
-            const SizedBox(height: 8),
           ],
         ),
       ),

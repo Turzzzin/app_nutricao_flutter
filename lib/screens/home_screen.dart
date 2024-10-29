@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import '../utils/custom_appbar.dart'; // Adjust the path if necessary
 import '../utils/database_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String? username;
+
+  HomeScreen({Key? key, this.username}) : super(key: key);
+
+
+  Future<void> logout() async {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('isLoggedIn', false);
+      await prefs.remove('username'); 
+    }
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> usuario = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       backgroundColor: Colors.white, // Light green background color
       appBar: CustomAppBar(
@@ -17,8 +26,9 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () {
-              // Add refresh functionality here
+            onPressed: () async {
+              await logout();
+              Navigator.pushReplacementNamed(context, '/login');
             },
           ),
         ],
@@ -35,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.add_circle_outline,
                   label: 'CADASTRAR\nALIMENTO',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/alimento/novo', arguments: usuario);
+                    Navigator.pushNamed(context, '/alimento/novo', arguments: username);
                   },
                 ),
                 _buildMenuButton(

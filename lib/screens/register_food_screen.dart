@@ -5,6 +5,7 @@ import '../utils/custom_button.dart';
 import '../utils/database_service.dart';
 
 
+
 class RegisterFoodScreen extends StatelessWidget {
   final TextEditingController nomeController = TextEditingController();
   final TextEditingController fotoPathController = TextEditingController();
@@ -25,7 +26,7 @@ class RegisterFoodScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> usuario = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    String usuario = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text("Cadastrar Alimento"),
@@ -51,12 +52,10 @@ class RegisterFoodScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
-            TextField(
+            CustomTextField(
               controller: categoriaController,
-              decoration: InputDecoration(
-                labelText: "Categoria",
-                border: OutlineInputBorder(),
-              ),
+              hintText: 'senha',
+              obscureText: true,
             ),
             SizedBox(height: 16),
             TextField(
@@ -89,6 +88,9 @@ class RegisterFoodScreen extends StatelessWidget {
                 },
                 text: "Cadastrar",
             ),
+            const SizedBox(height: 16),
+            const Divider(color: Colors.black),
+            const SizedBox(height: 8),
           ],
         ),
       ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/custom_text_field.dart';
 import '../utils/custom_button.dart';
-import '../utils/database_service.dart'; 
+import '../utils/database_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -20,10 +21,17 @@ class LoginScreen extends StatelessWidget {
     if (usuario.isNotEmpty) {
       if (usuario[0]['senha'] == password) {
         usuarioL = usuario[0];
+        saveLoginStatus(true, usuarioL['email']);
         return true;
       }
     }
     return false;
+  }
+
+  Future<void> saveLoginStatus(bool isLoggedIn, String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', isLoggedIn);
+    await prefs.setString('username', username);
   }
 
   @override

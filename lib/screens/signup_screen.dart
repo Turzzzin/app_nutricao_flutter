@@ -35,6 +35,7 @@ class SignupScreen extends StatelessWidget {
         textColor: Colors.black, // Set the desired text color here
       ),
       body: SafeArea(
+        child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -134,7 +135,7 @@ class SignupScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/login');
                   }
                   else if (!_criado && _senhaIgual) {
-                    showDialog(
+                    showDialog( // Refatorar isso aqui @Feipão
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
@@ -158,6 +159,7 @@ class SignupScreen extends StatelessWidget {
             ],
           ),
         ),
+      )
       ),
     );
   }

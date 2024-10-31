@@ -1,4 +1,3 @@
-import 'package:app_nutricao_flutter/screens/register_food_screen.dart';
 import 'package:flutter/material.dart';
 import './screens/login_screen.dart'; // Import your login screen here.
 import './screens/home_screen.dart'; // Make sure to import home screen too.

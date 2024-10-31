@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void showSuccessDialog(BuildContext context, String message) {
+void showSuccessDialog(BuildContext context, String message, String title) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -11,7 +11,7 @@ void showSuccessDialog(BuildContext context, String message) {
           TextButton(
             child: const Text('OK'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pushNamed(context, title);
             },
           ),
         ],

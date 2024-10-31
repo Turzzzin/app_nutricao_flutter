@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import '../utils/custom_appbar.dart'; // Adjust the path if necessary
-import '../utils/database_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String? username;
 
-  HomeScreen({Key? key, this.username}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
 
 
   Future<void> logout() async {
@@ -45,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.add_circle_outline,
                   label: 'CADASTRAR\nALIMENTO',
                   onPressed: () {
-                    Navigator.pushNamed(context, '/alimento/novo', arguments: username);
+                    Navigator.pushNamed(context, '/alimento/novo');
                   },
                 ),
                 _buildMenuButton(

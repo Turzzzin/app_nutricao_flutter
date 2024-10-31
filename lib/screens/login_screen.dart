@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/custom_text_field.dart';
 import '../utils/custom_button.dart';
 import '../utils/database_service.dart';
+import '../utils/custom_error_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -96,28 +97,11 @@ class LoginScreen extends StatelessWidget {
                 CustomButton(
                   onPressed: () async {
                     final loginExiste = await _login();
-                    print(loginExiste);
                     if (loginExiste == true) {
-                      Navigator.pushNamed(context, '/home', arguments: usuarioL);
+                      Navigator.pushNamed(context, '/home');
                     }
                     else {
-                      showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Erro'),
-                          content: const Text('Usuário ou senha incorretos!'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('OK'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    showErrorDialog(context, 'Usuário ou senha incorretos!');
                     }
                   },
                   text: 'LOGIN',

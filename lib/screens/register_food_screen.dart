@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/custom_text_field.dart';
 import '../utils/custom_button.dart';
 import '../utils/database_service.dart';
+import '../utils/auth_check.dart';
+import '../utils/custom_error_dialog.dart';
+import '../utils/custom_success_dialog.dart';
 
 
 
@@ -23,10 +25,12 @@ class RegisterFoodScreen extends StatelessWidget {
     final usuarioId = usuario['id'];
     return await DatabaseService.cadastrarAlimento(nome, fotoPath, categoria, tipo, usuarioId); 
   }
+  Future<Map<dynamic, dynamic>?> getUsername() async {
+    return await AuthCheck().checkLoginStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String usuario = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: Text("Cadastrar Alimento"),
@@ -62,23 +66,15 @@ class RegisterFoodScreen extends StatelessWidget {
             SizedBox(height: 32),
             CustomButton(
                 onPressed: () async {
-                  await _cadastrarAlimento(usuario);
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Sucesso!'),
-                          content: const Text('Alimento cadastrado com sucesso!'),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Text('OK'),
-                              onPressed: () {
-                                Navigator.pushNamed(context, '/home', arguments: usuario);
-                              },
-                            ),
-                          ],
-                        );
-                      });
+                  final usuario  = await getUsername();
+                  if (usuario != null) {
+                    await _cadastrarAlimento(usuario['username']);
+                    showSuccessDialog(context, 'Alimento cadastrado com sucesso!');
+                  }
+                  else {
+                    showErrorDialog(context, 'Usuário não encontrado');
+                  }
+                  Navigator.pushNamed(context, '/home');
                 },
                 text: "Cadastrar",
             ),

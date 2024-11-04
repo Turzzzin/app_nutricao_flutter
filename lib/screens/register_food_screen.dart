@@ -81,7 +81,7 @@ class _RegisterFoodScreen extends State<RegisterFoodScreen> {
                   _selectedImage = File(photoPathF);
                 });
               },
-              text: 'Selecionar imagem',
+              text: 'Selecionar foto alimento',
             ),
             SizedBox(height: 32),
             CustomButton(

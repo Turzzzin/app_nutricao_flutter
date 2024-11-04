@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.article_outlined,
                   label: 'NOVO\nCARDÁPIO',
                   onPressed: () {
-                    // Add novo cardápio functionality
+                    Navigator.pushNamed(context, '/cardapio/novo');
                   },
                 ),
               ],

@@ -65,7 +65,7 @@ class RegisterPacientScreen extends StatefulWidget {
                   _selectedImage = File(photoPathF);
                 });
               },
-              text: 'Selecionar imagem',
+              text: 'Selecionar foto paciente',
             ),
             SizedBox(height: 32),
             CustomButton(

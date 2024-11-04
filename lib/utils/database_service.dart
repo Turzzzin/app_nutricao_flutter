@@ -109,6 +109,11 @@ class DatabaseService {
     return db.query('alimento',where: 'nome = ?', whereArgs: [nome], limit: 1);
   }
 
+  static Future<List<Map<String, dynamic>>> listAlimentos()  async {
+    final db = await database();
+    return db.query('alimento');
+  }
+
 //cadastra cardapio
   static Future<int> cadastrarCardapio(String nome, int usuarioId, int pacienteId) async {
     final db = await database();

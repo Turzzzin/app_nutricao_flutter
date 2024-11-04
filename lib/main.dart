@@ -4,6 +4,7 @@ import './screens/home_screen.dart'; // Make sure to import home screen too.
 import './screens/signup_screen.dart';
 import './screens/register_food_screen.dart';
 import '../utils/auth_check.dart';
+import '../screens/register_pacient.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/signup': (context) => SignupScreen(),
         '/alimento/novo': (context) => RegisterFoodScreen(),
+        '/paciente/novo': (context) => RegisterPacientScreen(),
       },
     );
   }

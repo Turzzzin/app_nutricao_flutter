@@ -50,7 +50,7 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.person_add_outlined,
                   label: 'CADASTRAR\nPACIENTE',
                   onPressed: () {
-                    // Add cadastrar paciente functionality
+                    Navigator.pushNamed(context, '/paciente/novo');
                   },
                 ),
                 _buildMenuButton(

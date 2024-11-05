@@ -1,14 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import '../utils/custom_text_field.dart';
 import '../utils/custom_button.dart';
 import '../utils/database_service.dart';
 import '../utils/auth_check.dart';
-import '../utils/custom_error_dialog.dart';
-import '../utils/custom_success_dialog.dart';
-import '../utils/get_photo.dart';
-import '../utils/custom_dropdown.dart';
 import '../utils/custom_box.dart';
 
 

@@ -15,6 +15,7 @@ class DatabaseService {
       nome TEXT,
       sobrenome TEXT,
       fotoPath TEXT,
+      dataNascimento TIMESTAMP,
       createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
     )""");
 
@@ -33,9 +34,7 @@ class DatabaseService {
     await database.execute("""CREATE TABLE IF NOT EXISTS cardapio (
     id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     nome TEXT,
-    alimento_id INTEGER,
     paciente_id INTEGER,
-    FOREIGN KEY (alimento_id) REFERENCES alimento (id),
     FOREIGN KEY (paciente_id) REFERENCES paciente (id)
   );
 """);
@@ -57,9 +56,14 @@ class DatabaseService {
   static Future<sql.Database> database() async {
     return sql.openDatabase(
       'nutricao_app.db',
-      version: 1,
+      version: 2,
       onCreate: (sql.Database database, int version) async {
         await createTables(database);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+      if (oldVersion < 2) {
+        await db.execute('ALTER TABLE paciente ADD COLUMN dataNascimento TIMESTAMP');
+        }
       },
     );
   }
@@ -80,9 +84,10 @@ class DatabaseService {
   }
 
 //cadastra paciente
-  static Future<int> cadastrarPaciente(String nome, String sobrenome, String fotoPath) async {
+  static Future<int> cadastrarPaciente(String nome, String sobrenome, String fotoPath, DateTime dataNascimento) async {
     final db = await database();
-    final data = {'nome': nome, 'sobrenome': sobrenome, 'fotopath': fotoPath};
+    int timestamp = dataNascimento.millisecondsSinceEpoch;
+    final data = {'nome': nome, 'sobrenome': sobrenome, 'fotopath': fotoPath, 'dataNascimento': timestamp};
     final id = await db.insert('paciente', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;
@@ -92,6 +97,11 @@ class DatabaseService {
   static Future<List<Map<String, dynamic>>> getPaciente(String nome)  async {
     final db = await database();
     return db.query('paciente',where: 'nome = ?', whereArgs: [nome]);
+  }
+
+  static Future<List<Map<String, dynamic>>> listPacientes()  async {
+    final db = await database();
+    return db.query('paciente');
   }
 
 //cadastra alimento
@@ -115,9 +125,9 @@ class DatabaseService {
   }
 
 //cadastra cardapio
-  static Future<int> cadastrarCardapio(String nome, int usuarioId, int pacienteId) async {
+  static Future<int> cadastrarCardapio(String nome, int pacienteId) async {
     final db = await database();
-    final data = {'nome': nome, 'usuario_id': usuarioId, 'paciente_id': pacienteId};
+    final data = {'nome': nome, 'paciente_id': pacienteId};
     final id = await db.insert('cardapio', data,
         conflictAlgorithm: sql.ConflictAlgorithm.replace);
     return id;

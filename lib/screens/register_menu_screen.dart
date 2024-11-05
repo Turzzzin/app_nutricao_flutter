@@ -9,6 +9,7 @@ import '../utils/custom_error_dialog.dart';
 import '../utils/custom_success_dialog.dart';
 import '../utils/get_photo.dart';
 import '../utils/custom_dropdown.dart';
+import '../utils/custom_box.dart';
 
 
 class RegisterMenuScreen extends StatefulWidget {
@@ -23,31 +24,42 @@ class _RegisterMenuScreenState extends State<RegisterMenuScreen> {
   @override
   void initState() {
     super.initState();
-    _listAlimentos(); // Chama a função desejada ao carregar a tela
+    _listAlimentos();
+    _listPacientes();
   }
 
   final _nameController = TextEditingController();
 
   
-  Map<String, dynamic>? usuario = {};
+  Map<String, dynamic> usuario = {};
   final opcoes = [
-    {'id': 1, 'nome': 'Almoço'},
-    {'id': 2, 'nome': 'Café da manhã'},
-    {'id': 3, 'nome': 'Jantar'},
+    'Almoço',
+    'Café da manhã',
+    'Jantar',
   ];
   int? cardapioId;
   var cardapiosList = [];
   List<Map<String, dynamic>> alimentosList = [];
-  List<int> alimentosIdList = [];
+  List<Map<String, dynamic>> alimentosCafeSelectedList = [];
+  List<Map<String, dynamic>> alimentosAlmocoSelectedList = [];
+  List<Map<String, dynamic>> alimentosJantarSelectedList = [];
+  List<Map<String, dynamic>> pacientesList = [];
   int? _selectedId;
+  int? _selectedPacienteId;
+  int indiceC = 0;
+  int indiceA = 0;
+  int indiceJ = 0;
 
 
   Future<int> _cadastrarCardapio() async {
-    setState() async {
-      usuario = await AuthCheck().checkLoginStatus();
+    final loged = await AuthCheck().checkLoginStatus();
+    final user = await DatabaseService.getUsuario(loged!['username']);
+
+    setState() {
+      usuario = user[0];
     }
     final nome = _nameController.text;
-    final cardapio = await DatabaseService.cadastrarCardapio(nome, usuario!['id'],0);
+    final cardapio = await DatabaseService.cadastrarCardapio(nome, _selectedPacienteId!);
     return cardapio;
   }
 
@@ -58,7 +70,14 @@ class _RegisterMenuScreenState extends State<RegisterMenuScreen> {
     });
   }
 
-  Future<int> _cadastrarAlimento() async {
+  Future<void> _listPacientes() async {
+    final pacientes = await DatabaseService.listPacientes();
+    setState(() {
+      pacientesList = pacientes;
+    });
+  }
+
+  Future<int> _cadastrarAlimento(option) async {
     final alimentoSelectedId = _selectedId;
     if (cardapioId == null) {
       final cardapio = await _cadastrarCardapio();
@@ -67,10 +86,30 @@ class _RegisterMenuScreenState extends State<RegisterMenuScreen> {
       });
 
     }
+    final opcao = opcoes[option];
+    final alimento = alimentosList.firstWhere(
+    (item) => item['id'] == alimentoSelectedId,
+    orElse: () => {},);
+    setState(() {
+      if (opcao == 'Café da manhã') { 
+        alimentosCafeSelectedList.add(alimento);
+        indiceC += 1;
+      }
+      else if (opcao == 'Almoço') {
+        alimentosAlmocoSelectedList.add(alimento);
+        indiceA += 1;
+      }
+      else {
+        alimentosJantarSelectedList.add(alimento);
+        indiceJ += 1;
+      }
+    });
+    
     return await DatabaseService.cadastrarCardapioAlimento(
-      opcao, cardapioId, alimentoSelectedId!,
+      opcao, cardapioId!, alimentoSelectedId!,
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +117,9 @@ class _RegisterMenuScreenState extends State<RegisterMenuScreen> {
       appBar: AppBar(
         title: const Text('Cadastrar Cardapio'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
+        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -89,45 +129,67 @@ class _RegisterMenuScreenState extends State<RegisterMenuScreen> {
               obscureText: false,
             ),
             const SizedBox(height: 16),
-            Container(
-            padding: EdgeInsets.all(16.0),
-            margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 6.0,
-                  offset: Offset(0, 2),
-                ),
-              ],
+            _selectedPacienteId != null ? Text("Paciente selecionado: ${pacientesList.firstWhere((item) => item['id'] == _selectedPacienteId)['nome']}",
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,), textAlign: TextAlign.center,) 
+            :
+            CustomBox(title: "Paciente", options: pacientesList, selectedId: _selectedPacienteId, text: "Escolha o Paciente", alimentosSelectedList: alimentosAlmocoSelectedList, indice: indiceC,
+            onChanged: (int? newId) {
+              setState(() {         
+              _selectedPacienteId = newId;
+              });
+            },
+            onPressed: () {
+               setState(() {
+                _selectedPacienteId = _selectedPacienteId;
+            }); 
+            },
             ),
-            child: Column(
-              children: [
-                Row(children: [
-              customDropdown(
-              options: alimentosList,
-              selectedId: _selectedId,
-              onChanged: (int? newId) {
-                setState(() {
-                  _selectedId = newId;
-                });
-              },
-              text: 'Selecione um alimento',
-              ),
-              CustomButton(
-                onPressed: () async {
-                  await _cadastrarAlimento();
-                },
-                text: "${const Icon(Icons.add)}")
-            ],)
-            ],
+            const SizedBox(height: 16),
+            CustomBox(title: "Café da manhã", options: alimentosList, selectedId: _selectedId, text: "Escolha o Alimento", alimentosSelectedList: alimentosCafeSelectedList, indice: indiceC,
+            onChanged: (int? newId) {
+              setState(() {
+                _selectedId = newId;
+            }); 
+            },
+            onPressed: () async {
+              _selectedId = _selectedId;
+              await _cadastrarAlimento(1);
+            },
             ),
-          )]
+            const SizedBox(height: 16),
+            CustomBox(title: "Almoço", options: alimentosList, selectedId: _selectedId, text: "Escolha o Alimento", alimentosSelectedList: alimentosAlmocoSelectedList, indice: indiceA,
+            onChanged: (int? newId) {
+              setState(() {
+                _selectedId = newId;
+            }); 
+            },
+            onPressed: () async {
+              _selectedId = _selectedId;
+              await _cadastrarAlimento(0);
+            },
+            ),
+            const SizedBox(height: 16),
+            CustomBox(title: "Jantar", options: alimentosList, selectedId: _selectedId, text: "Escolha o Alimento", alimentosSelectedList: alimentosJantarSelectedList, indice: indiceJ,
+            onChanged: (int? newId) {
+              setState(() {
+                _selectedId = newId;
+            }); 
+            },
+            onPressed: () async {
+              _selectedId = _selectedId;
+              await _cadastrarAlimento(2);
+            },
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/home');
+            }, 
+            text: "Salvar Cardápio"),
+          ],
         ),
-      )
-  );
+      ),  
+    );
   }
       
 }

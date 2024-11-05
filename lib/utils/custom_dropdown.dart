@@ -7,6 +7,7 @@ Widget customDropdown({
   required String text,
 }) {
  return DropdownButton<int>(
+    isExpanded: true,
     hint: Text(text),
     value: selectedId, // Valor selecionado
     icon: Icon(Icons.arrow_drop_down),

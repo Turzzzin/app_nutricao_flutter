@@ -103,6 +103,10 @@ class DatabaseService {
     final db = await database();
     return db.query('paciente');
   }
+  static Future<List<Map<String, dynamic>>> getLikePacientes(String nome)  async {
+    final db = await database();
+    return db.query('paciente',where: 'nome LIKE ?', whereArgs: ['%$nome%']);
+  }
 
 //cadastra alimento
   static Future<int> cadastrarAlimento(String nome, String fotoPath, String categoria, String tipo, int usuarioId) async {

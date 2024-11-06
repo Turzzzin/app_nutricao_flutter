@@ -7,7 +7,7 @@ import '../utils/custom_box.dart';
 
 
 class RegisterMenuScreen extends StatefulWidget {
-  const RegisterMenuScreen({Key? key}) : super(key: key);
+  const RegisterMenuScreen({super.key});
 
   @override
   State<RegisterMenuScreen> createState() => _RegisterMenuScreenState();

@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 20),
-            Column(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildMenuButton(
@@ -59,16 +59,20 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/cardapio/novo');
                   },
-                ),
-                _buildMenuButton(
+                ),               
+              ],
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildMenuButton(
                   icon: Icons.person,
                   label: 'BUSCAR\nPACIENTE',
                   onPressed: () {
                     Navigator.pushNamed(context, '/paciente/buscar');
                   },
                 ),
-              ],
-            ),
+                ])
           ],
         ),
       ),

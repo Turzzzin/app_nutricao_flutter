@@ -50,13 +50,8 @@ class CustomListView extends StatelessWidget {
                 : CircleAvatar(
                     child: Icon(Icons.person),
                   ),
-                title: Text(item['nome'] + ' ' + item['sobrenome']),
-                subtitle: Text(
-                            'Idade: ' +
-                            (item['dataNascimento'] != null 
-                              ? (DateTime.now().year - DateTime.fromMillisecondsSinceEpoch(item['dataNascimento']).year).toString() + ' anos'
-                              : 'Não informado'),
-                          ),
+                title: Text(item['nome'] + '\nTipo: ' + item['tipo']),
+                subtitle: Text("Categoria: ${item['categoria']}"),
                 onTap: () {
                   print('Item selecionado: ${item['nome']}');
                 },

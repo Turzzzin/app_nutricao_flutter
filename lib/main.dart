@@ -7,6 +7,7 @@ import '../utils/auth_check.dart';
 import '../screens/register_pacient.dart';
 import '../screens/register_menu_screen.dart';
 import '../screens/search_pacient_screen.dart';
+import '../screens/search_food_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomeScreen(),
         '/signup': (context) => SignupScreen(),
         '/alimento/novo': (context) => RegisterFoodScreen(),
+        '/alimento/buscar': (context) => SearchFoodScreen(),
         '/paciente/novo': (context) => RegisterPacientScreen(),
         '/paciente/buscar': (context) => SearchPacientScreen(),
         '/cardapio/novo': (context) => RegisterMenuScreen(),

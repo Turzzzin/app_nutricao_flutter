@@ -72,6 +72,13 @@ class HomeScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/paciente/buscar');
                   },
                 ),
+                _buildMenuButton(
+                  icon: Icons.person,
+                  label: 'BUSCAR\nALIMENTO',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/alimento/buscar');
+                  },
+                ),
                 ])
           ],
         ),

@@ -60,13 +60,13 @@ class _RegisterFoodScreen extends State<RegisterFoodScreen> {
             SizedBox(height: 16),
             CustomTextField(
               controller: categoriaController,
-              hintText: 'Categoria',
+              hintText: 'Categoria (Café da manhã, almoço, jantar...)',
               obscureText: false,
             ),
             SizedBox(height: 16),
             CustomTextField(
               controller: tipoController,
-              hintText: "Tipo",
+              hintText: "Tipo (Proteína, Carboidrato, gordura, bebida...)",
               obscureText: false,
             ),
             SizedBox(height: 16),

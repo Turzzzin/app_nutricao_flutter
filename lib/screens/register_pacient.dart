@@ -29,7 +29,7 @@ class RegisterPacientScreen extends StatefulWidget {
   Future<int> _cadastrarPaciente() async {
     final nome = nomeController.text;
     final sobrenome = sobrenomeController.text;
-    final fotoPath = fotoPathController.text;
+    final fotoPath = photoPathF;
     return await DatabaseService.cadastrarPaciente(nome, sobrenome, fotoPath, _selectedDate!);
   }
 

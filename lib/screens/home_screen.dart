@@ -59,9 +59,20 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.pushNamed(context, '/cardapio/novo');
                   },
-                ),
+                ),               
               ],
             ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildMenuButton(
+                  icon: Icons.person,
+                  label: 'BUSCAR\nPACIENTE',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/paciente/buscar');
+                  },
+                ),
+                ])
           ],
         ),
       ),

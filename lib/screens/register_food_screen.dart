@@ -47,7 +47,7 @@ class _RegisterFoodScreen extends State<RegisterFoodScreen> {
       appBar: AppBar(
         title: Text("Cadastrar Alimento"),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

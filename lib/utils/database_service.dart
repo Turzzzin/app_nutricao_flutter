@@ -123,6 +123,11 @@ class DatabaseService {
     return db.query('alimento',where: 'nome = ?', whereArgs: [nome], limit: 1);
   }
 
+  static Future<List<Map<String, dynamic>>> getAlimentoId(int id)  async {
+    final db = await database();
+    return db.query('alimento',where: 'id = ?', whereArgs: [id], limit: 1);
+  }
+
   static Future<List<Map<String, dynamic>>> listAlimentos()  async {
     final db = await database();
     return db.query('alimento');
@@ -146,6 +151,11 @@ class DatabaseService {
   static Future<List<Map<String, dynamic>>> getCardapio(int pacienteId)  async {
     final db = await database();
     return db.query('cardapio',where: 'paciente_id = ?', whereArgs: [pacienteId], limit: 1);
+  }
+
+  static Future<List<Map<String, dynamic>>> getLikeCardapio(String nome) async {
+    final db = await database();
+    return db.query('cardapio',where: 'nome LIKE ?', whereArgs: ['%$nome%']);
   }
 
 //cadastra cardapio alimento

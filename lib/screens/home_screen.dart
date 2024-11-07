@@ -79,6 +79,13 @@ class HomeScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/alimento/buscar');
                   },
                 ),
+                _buildMenuButton(
+                  icon: Icons.description,
+                  label: 'BUSCAR\nCARDÁPIO',
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/cardapio/buscar');
+                  },
+                ),
                 ])
           ],
         ),

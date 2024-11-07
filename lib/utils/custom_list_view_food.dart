@@ -41,7 +41,7 @@ class CustomListView extends StatelessWidget {
                 return ListTile(
                   trailing: ShareScreen(
                   item: item,
-                  opcao: 'alimentação',
+                  opcao: 'alimento',
                   ),
                   leading: fotoPath != null && File(fotoPath).existsSync()
                       ? Image.file(

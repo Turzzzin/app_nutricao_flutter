@@ -135,7 +135,7 @@ class SignupScreen extends StatelessWidget {
                     Navigator.pushNamed(context, '/login');
                   }
                   else if (!_criado && _senhaIgual) {
-                    showDialog( // Refatorar isso aqui @Feipão
+                    showDialog( 
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(

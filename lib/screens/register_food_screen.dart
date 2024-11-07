@@ -47,7 +47,7 @@ class _RegisterFoodScreen extends State<RegisterFoodScreen> {
       appBar: AppBar(
         title: Text("Cadastrar Alimento"),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -60,13 +60,13 @@ class _RegisterFoodScreen extends State<RegisterFoodScreen> {
             SizedBox(height: 16),
             CustomTextField(
               controller: categoriaController,
-              hintText: 'Categoria',
+              hintText: 'Categoria (Café da manhã, almoço, jantar...)',
               obscureText: false,
             ),
             SizedBox(height: 16),
             CustomTextField(
               controller: tipoController,
-              hintText: "Tipo",
+              hintText: "Tipo (Proteína, Carboidrato, gordura, bebida...)",
               obscureText: false,
             ),
             SizedBox(height: 16),

@@ -33,7 +33,7 @@ class _ShareScreenState extends State<ShareScreen> {
     setState(() {
       _isLoading = true; // Inicia o carregamento
     });
-
+print('foi');
     // Criação do documento PDF
     final pdf = pw.Document();
     String texto = '';
@@ -95,18 +95,11 @@ class _ShareScreenState extends State<ShareScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Compartilhar Arquivo')),
-      body: Center(
-        child: _isLoading
-            ? CircularProgressIndicator() // Mostra indicador de carregamento
-            : IconButton(
-                icon: Icon(Icons.share),
-                onPressed: () {
-                  generatePDF(widget.item ?? {}, widget.opcao ?? 'default');
-                },
-              ),
-      ),
-    );
-  }
+  return  IconButton(
+        icon: Icon(Icons.share),
+        onPressed: () {
+          generatePDF(widget.item ?? {}, widget.opcao ?? 'default');
+        },
+      );
+}
 }

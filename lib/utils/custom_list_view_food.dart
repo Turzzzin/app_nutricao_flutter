@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
+import './sharePdf.dart';
 
 
 class CustomListView extends StatelessWidget {
@@ -40,6 +41,9 @@ class CustomListView extends StatelessWidget {
               final item = options[index];
               final fotoPath = item['fotoPath'];
               return ListTile(
+                trailing: ShareScreen(
+                  item: item,
+                  opcao: 'alimentação',),
                 leading: fotoPath != null && File(fotoPath).existsSync()
                 ? Image.file(
                     File(fotoPath),

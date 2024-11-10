@@ -18,10 +18,16 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white, // Light green background color
       appBar: CustomAppBar(
-        title: 'Tela Principal',
+        title: '',
         textColor: Colors.black, // Set the desired text color here
         showBackButton: false,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.info),
+            onPressed: () {
+              Navigator.pushNamed(context, '/info');
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
